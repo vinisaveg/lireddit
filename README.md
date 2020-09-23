@@ -6,14 +6,14 @@ This application is sort of a Reddit clone, covering lots of tools and framework
 
 ### The beauties of this project :nail_care:
 
-** React
-** TypeScript
-** GraphQL
-** URQL/Apollo
-** Node.js
-** PostgreSQL
-** MikroORM/TypeORM
-** Redis
-** Next.js
-** TypeGraphQL
-** Chakra
+* React
+* TypeScript
+* GraphQL
+* URQL/Apollo
+* Node.js
+* PostgreSQL
+* MikroORM/TypeORM
+* Redis
+* Next.js
+* TypeGraphQL
+* Chakra
