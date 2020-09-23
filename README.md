@@ -1,2 +1,3 @@
 # lireddit
-A lil bit of reddit clone
+
+> A lil bit of reddit clone
