@@ -7,7 +7,7 @@ interface WrapperProps {
 
 export const Wrapper: FunctionComponent<WrapperProps> = ({
   children,
-  variant,
+  variant = "regular",
 }) => {
   return (
     <Box
