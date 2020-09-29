@@ -9,6 +9,7 @@ import {
   Resolver,
 } from "type-graphql";
 import argon2 from "argon2";
+import { EntityManager } from "@mikro-orm/postgresql";
 
 import { User } from "../entities/User";
 import { MyContext } from "../types";
@@ -16,7 +17,7 @@ import { MyContext } from "../types";
 @InputType()
 class UsernamePasswordInput {
   @Field()
-  usernane: string;
+  username: string;
 
   @Field()
   password: string;
@@ -58,7 +59,7 @@ export class UserResolver {
     @Arg("options") options: UsernamePasswordInput,
     @Ctx() { em, req }: MyContext
   ): Promise<UserResponse> {
-    if (options.usernane.length <= 2) {
+    if (options.username.length <= 2) {
       return {
         errors: [
           {
@@ -82,13 +83,21 @@ export class UserResolver {
 
     const hashedPassword = await argon2.hash(options.password);
 
-    const newUser = em.create(User, {
-      username: options.usernane,
-      password: hashedPassword,
-    });
+    let newUser;
 
     try {
-      await em.persistAndFlush(newUser);
+      const result = await (em as EntityManager)
+        .createQueryBuilder(User)
+        .getKnexQuery()
+        .insert({
+          username: options.username,
+          password: hashedPassword,
+          created_at: new Date(),
+          updated_at: new Date(),
+        })
+        .returning("*");
+
+      newUser = result[0];
     } catch (error) {
       //duplicate username error
       if (error.code === "23505") {
@@ -113,7 +122,7 @@ export class UserResolver {
     @Arg("options") options: UsernamePasswordInput,
     @Ctx() { em, req }: MyContext
   ): Promise<UserResponse> {
-    const user = await em.findOne(User, { username: options.usernane });
+    const user = await em.findOne(User, { username: options.username });
 
     if (!user) {
       return {
