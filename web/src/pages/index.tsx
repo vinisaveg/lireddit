@@ -1,8 +1,16 @@
+import { Box } from "@chakra-ui/core";
 import React, { FunctionComponent } from "react";
-import Register from "./register";
+import { NavBar } from "../components/NavBar";
 
 const Index: FunctionComponent = () => {
-  return <Register />;
+  return (
+    <>
+      <NavBar />
+      <Box>
+        <span>Hello World!</span>
+      </Box>
+    </>
+  );
 };
 
 export default Index;

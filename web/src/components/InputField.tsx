@@ -29,7 +29,6 @@ export const InputField: FunctionComponent<InputFieldProps> = ({
         {...field}
         id={field.name}
         placeholder={props.placeholder}
-        color="222"
       />
       {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}
     </FormControl>
